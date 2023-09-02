@@ -33,6 +33,7 @@ public class GeneticAlgorithm {
 
     // memilih kromosom yang akan dikenai operasi crossover/mutasi
     int selection() {
+        //pilih secara acak kromosom dari populasi
         Random rand = new Random();
         return rand.nextInt(popSize);
     }
@@ -40,47 +41,56 @@ public class GeneticAlgorithm {
     // operasi crossover, pilih teknik yang digunakan
     // dua kromosom anak menggantikan kromosom induk ini
     void crossover() {
+        //teknik yang digunakan adalah one point crossover
+
+        //pilih 2 kromosom untuk di crossover
         int parent1Index = selection();
         int parent2Index = selection();
 
-        // Perform crossover operation between parent1 and parent2 chromosomes
-        // Replace parents with offspring chromosomes
+        
+        //lakukan crossover antara kromosom parent1 dan parent2
+        //ganti kromosom parent dengan kromosom anak
         Chromosome parent1 = population[parent1Index];
         Chromosome parent2 = population[parent2Index];
 
-        // Implement crossover operation (e.g., one-point crossover)
+        //one point crossover
         int crossoverPoint = selection();
-        Chromosome offspring1 = new Chromosome(size, puzzle);
-        Chromosome offspring2 = new Chromosome(size, puzzle);
 
+        Chromosome anak1 = new Chromosome(size, puzzle);
+        Chromosome anak2 = new Chromosome(size, puzzle);
+        //copy gen sebelum crossover point
         for (int i = 0; i < size; i++) {
+
             if (i < crossoverPoint) {
-                offspring1.genes[i] = parent1.genes[i];
-                offspring2.genes[i] = parent2.genes[i];
+                anak1.genes[i] = parent1.genes[i];
+                anak2.genes[i] = parent2.genes[i];
             } else {
-                offspring1.genes[i] = parent2.genes[i];
-                offspring2.genes[i] = parent1.genes[i];
+                anak1.genes[i] = parent2.genes[i];
+                anak2.genes[i] = parent1.genes[i];
             }
         }
-        // Replace parents with offspring in the population
-        population[parent1Index] = offspring1;
-        population[parent2Index] = offspring2;
+        //ganti kromosom parent dengan kromosom anak
+        population[parent1Index] = anak1;
+        population[parent2Index] = anak2;
     }
 
     // operasi mutasi, pilih teknik yang digunakan
     // pilih satu kromosom untuk dikenai mutasi
     // lakukan perubahan pada kromosom tersebut
     void mutation() {
+        //pilih kromosom untuk di mutasi secara acak dari populasi
         int mutantIndex = selection();
         Chromosome mutant = population[mutantIndex];
-        
+        //lakukan mutasi pada kromosom tersebut
         Random rand = new Random();
+        //pilih gen atau titik mutasi yang akan dimutasi
         int mutationPoint = rand.nextInt(size);
-    
+        //pengecekan apakah gen tersebut sudah terisi atau belum
         if (mutant.genes[mutationPoint].getNumber() == -1) {
+            //jika gen tersebut belum terisi, maka isi dengan angka acak antara 1 sampai size
             mutant.genes[mutationPoint] = new Gene(rand.nextInt(size) + 1);
         }
-    
+        //update kromosom pada populasi
         population[mutantIndex] = mutant;
     }
     
@@ -94,7 +104,7 @@ public class GeneticAlgorithm {
             int totalDuplication = chromosome.fitness();
 
             chromosome.fitness = (float) ((totalDuplication));
-
+            //catat kromosom terbaik
             if (chromosome.fitness < population[best].fitness) {
                 best = i;
             }
@@ -114,10 +124,9 @@ public class GeneticAlgorithm {
         }
     }
     void restChromosomes() {
-        // Number of chromosomes to keep from the previous generation (e.g., top 10%)
-        int numElitesToKeep = (int) (popSize * 0.1); // You can adjust this percentage
-    
-        // Create new chromosomes to replace the rest of the population
+        //set 10% kromosom terbaik dari populasi sebelumnya
+        int numElitesToKeep = (int) (popSize * 0.1); 
+
         for (int i = numElitesToKeep; i < popSize; i++) {
             population[i] = new Chromosome(size, puzzle);
         }
@@ -135,15 +144,10 @@ public class GeneticAlgorithm {
             mutation();
             restChromosomes();
             checkFitness();
-            //print fitness of best chromosome
+            //print fitness terbaik
             System.out.println("Fitness of best chromosome: " + population[best].fitness);
-           
-
-           
             iter++;
-            //print each board that has been generated
-            //System.out.println("Iteration " + iter);
-           //population[best].printChromosome(size);
+            
             
 
         }
