@@ -312,13 +312,13 @@ public class guiFrame extends javax.swing.JFrame {
     // mencari solusi
     private void SolveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_SolveButtonActionPerformed
         // TODO add your handling code here:
-        ga = new GeneticAlgorithm(4, s.puzzle, 0.6, 0.1, 20, 10000);
+        ga = new GeneticAlgorithm(4, s.puzzle, 0.6, 0.1, 20, 1000);
         ga.iteration();
-        // update board
-        int[][] newBoard = new int[4][4];
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                newBoard[i][j] = ga.population[ga.best].genes[i * 4 + j].number;
+        // update board yang ditampilkan dengan solusi terbaik
+        int[][] newBoard = new int[ga.size][ga.size];
+        for (int i = 0; i < ga.size; i++) {
+            for (int j = 0; j < ga.size; j++) {
+                newBoard[i][j] = ga.population[ga.best].genes[i * ga.size + j].number;
             }
         }
         s.board = newBoard;

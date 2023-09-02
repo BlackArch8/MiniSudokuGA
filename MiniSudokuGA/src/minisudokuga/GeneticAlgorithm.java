@@ -73,12 +73,10 @@ public class GeneticAlgorithm {
     void mutation() {
         int mutantIndex = selection();
         Chromosome mutant = population[mutantIndex];
-    
-        // Implement mutation operation
+        
         Random rand = new Random();
         int mutationPoint = rand.nextInt(size);
     
-        // Check if the mutation point is in an empty cell (not a known value)
         if (mutant.genes[mutationPoint].getNumber() == -1) {
             mutant.genes[mutationPoint] = new Gene(rand.nextInt(size) + 1);
         }
@@ -92,16 +90,11 @@ public class GeneticAlgorithm {
     void checkFitness() {
         for (int i = 0; i < population.length; i++) {
             Chromosome chromosome = population[i];
-    
-            
-    
+
             int totalDuplication = chromosome.fitness();
-    
-            // Set the fitness as the inverse of the total duplication
+
             chromosome.fitness = (float) ((totalDuplication));
-    
-            // Update the best chromosome if necessary
-            
+
             if (chromosome.fitness < population[best].fitness) {
                 best = i;
             }
@@ -120,6 +113,16 @@ public class GeneticAlgorithm {
             population[i].printChromosome(size);
         }
     }
+    void restChromosomes() {
+        // Number of chromosomes to keep from the previous generation (e.g., top 10%)
+        int numElitesToKeep = (int) (popSize * 0.1); // You can adjust this percentage
+    
+        // Create new chromosomes to replace the rest of the population
+        for (int i = numElitesToKeep; i < popSize; i++) {
+            population[i] = new Chromosome(size, puzzle);
+        }
+    }
+    
     
 
     // iterasi
@@ -130,7 +133,7 @@ public class GeneticAlgorithm {
         while (!termination(iter)) {
             crossover();
             mutation();
-            //restChromosomes();
+            restChromosomes();
             checkFitness();
             //print fitness of best chromosome
             System.out.println("Fitness of best chromosome: " + population[best].fitness);
