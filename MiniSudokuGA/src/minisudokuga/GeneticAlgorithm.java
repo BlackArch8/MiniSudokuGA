@@ -139,13 +139,17 @@ public class GeneticAlgorithm {
         init();
         checkFitness();
         int iter = 0;
+        float fitness = 99999;
         while (!termination(iter)) {
             crossover();
             mutation();
             restChromosomes();
             checkFitness();
-            //print fitness terbaik
-            System.out.println("Fitness of best chromosome: " + population[best].fitness);
+            //catat fitness terbaik
+            if(fitness > population[best].fitness){
+                fitness = population[best].fitness;
+            }
+            System.out.println("Fitness of best chromosome: " +fitness);
             iter++;
             
             
