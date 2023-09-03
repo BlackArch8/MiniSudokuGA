@@ -50,6 +50,13 @@ public class Chromosome {
             }
         }
     }
+    Chromosome(Chromosome other) {
+        this.fitness = other.fitness;
+        this.genes = new Gene[other.genes.length];
+        for (int i = 0; i < other.genes.length; i++) {
+            this.genes[i] = new Gene(other.genes[i].getNumber());
+        }
+    }
     
     // mengembalikan berapa banyak duplikasi di baris
     int rowCheck() {
@@ -132,7 +139,7 @@ public class Chromosome {
  
     // menampilkan kromosom dalam bentuk papan permainan
     void printChromosome(int size){
-        // Sudoku s = new Sudoku(size, this.toBoard(size));
-        // s.printSudoku();
+        Sudoku s = new Sudoku(size, this.toBoard(size));
+        s.printSudoku();
     }
 }

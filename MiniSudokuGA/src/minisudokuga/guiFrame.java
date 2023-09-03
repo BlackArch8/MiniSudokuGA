@@ -312,16 +312,24 @@ public class guiFrame extends javax.swing.JFrame {
     // mencari solusi
     private void SolveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_SolveButtonActionPerformed
         // TODO add your handling code here:
-        ga = new GeneticAlgorithm(4, s.puzzle, 0.6, 0.1, 20, 1000);
+        ga = new GeneticAlgorithm(4, s.puzzle, 0.6, 0.1, 20, 10000);
         ga.iteration();
         // update board yang ditampilkan dengan solusi terbaik
+        Chromosome bestChromosome = ga.bestChromosome;
+        //update ke board
         int[][] newBoard = new int[ga.size][ga.size];
         for (int i = 0; i < ga.size; i++) {
             for (int j = 0; j < ga.size; j++) {
-                newBoard[i][j] = ga.population[ga.best].genes[i * ga.size + j].number;
+                newBoard[i][j] = bestChromosome.genes[i * ga.size + j].getNumber();
             }
         }
+        
+        
         s.board = newBoard;
+        System.out.println("Best chromosome: ");
+        bestChromosome.printChromosome(ga.size);
+        System.out.println("Fitness: " + ga.fitness);
+        
         showBoard();
     }// GEN-LAST:event_SolveButtonActionPerformed
 
