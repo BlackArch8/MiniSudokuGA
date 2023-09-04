@@ -12,7 +12,8 @@ import javax.swing.JFileChooser;
 
 /**
  *
- * @author User
+ * @author Doni Andrian - 6182001020
+ *         Kevin Jonathan - 6182001026
  */
 public class guiFrame extends javax.swing.JFrame {
 

@@ -7,7 +7,8 @@ package minisudokuga;
 
 /**
  *
- * @author CEN
+ * @author Doni Andrian - 6182001020
+ *         Kevin Jonathan - 6182001026
  */
 import java.util.*;
 public class Chromosome {
@@ -50,6 +51,7 @@ public class Chromosome {
             }
         }
     }
+    //kami menambahkan konstruktor ini digunakan untuk menyimpan kromosom terbaik
     Chromosome(Chromosome other) {
         this.fitness = other.fitness;
         this.genes = new Gene[other.genes.length];

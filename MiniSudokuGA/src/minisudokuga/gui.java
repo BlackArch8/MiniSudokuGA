@@ -7,7 +7,8 @@ package minisudokuga;
 
 /**
  *
- * @author USER
+ * @author Doni Andrian - 6182001020
+ *         Kevin Jonathan - 6182001026
  */
 public class gui extends javax.swing.JDialog {
 
